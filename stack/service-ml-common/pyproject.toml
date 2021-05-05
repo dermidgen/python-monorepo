@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "service-ml-common"
+version = "0.1.0"
+description = ""
+authors = ["Danny Graham <good.midget@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+libml = ""
+libtelemetry = ""
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+libml = {path = "../../libs/libml", develop = true}
+libtelemetry = {path = "../../libs/libtelemetry", develop = true}
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "libtelemetry"
+version = "0.1.0"
+description = ""
+authors = ["Danny Graham <good.midget@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+opencensus = "^0.7.12"
+opencensus-ext-logging = "^0.1.0"
+opencensus-ext-stackdriver = "^0.7.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
