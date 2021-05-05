@@ -14,5 +14,5 @@ for dep in $DEPS; do
 done
 
 cd $BASEDIR
+poetry install
 poetry build
-docker build -f $BASEDIR/Dockerfile -t $PKG:latest ./dist

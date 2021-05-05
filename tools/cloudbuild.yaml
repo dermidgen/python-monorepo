@@ -1,0 +1,36 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker pull gcr.io/$PROJECT_ID/$_PACKAGE_NAME:latest || exit 0
+
+  - name: 'dermidgen/poetry:latest'
+    entrypoint: 'sh'
+    args: ['-c', '../../tools/ci-build.sh']
+    dir: 'stack/$_PACKAGE_NAME'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:$SHORT_SHA', '-f', 'Dockerfile', '--cache-from', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:latest', './dist']
+    dir: 'stack/$_PACKAGE_NAME'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:$SHORT_SHA']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:$SHORT_SHA', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:latest']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/$_PACKAGE_NAME:latest']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+        /builder/kubectl.bash set image deployment $_PACKAGE_NAME $_PACKAGE_NAME=gcr.io/$PROJECT_ID/$_PACKAGE_NAME:$SHORT_SHA && \
+        /builder/kubectl.bash rollout status deployment $_PACKAGE_NAME
+    env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=[xxx-cluster-name-xxx]'
