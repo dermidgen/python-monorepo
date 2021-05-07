@@ -53,4 +53,4 @@ You'll need Poetry, GNU Make and Docker.
 ## Explore & Discuss
 Checkout the other helpers, like `tools/cloudbuild.yaml`, `tools/poetry.dockerfile` and the `Makefiles`.  Criticism, discussion, issues and PRs are welcome.
 
-Join the first discussion about the use of [shared libraries in microservices](https://github.com/dermidgen/python-monorepo/discussions/2) and share your war stories of doing it wrong - or right - or whatever.
+Join the discussion about the use of [shared libraries in microservices](https://github.com/dermidgen/python-monorepo/discussions/2) and share your war stories of doing it wrong - or right - or whatever.
