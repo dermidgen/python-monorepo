@@ -17,6 +17,7 @@ $(BUILD_DIR)/deps:
 	mkdir -p $(BUILD_DIR)/deps
 
 $(WHEELS): $(BUILD_DIR)/deps 
+	mkdir -p $(@D)
 	cd $(@D)/../ && poetry build
 	cp $@ ${BUILD_DIR}/deps/.
 
