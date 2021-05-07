@@ -36,3 +36,21 @@ Disadvantages include:
  * Tooling dependent. At least you can keep the tooling pretty light and easy to understand.
  * Poetry creates a fresh venv for every service. This can lead to a _ton_ of bloat locally.
  * Changes to shared libraries will cause Docker build to reinstall all of their dependencies; keep them light.
+
+# Play Time
+You'll need Poetry, GNU Make and Docker.
+
+ * `cd` your way into a service directory
+ * `poetry install`
+ * Run the service with `poetry run python -m [service_folder]`
+ * Run a complete build, including a docker container with `make`
+ * Wipe out wheels with `make clean`
+ * Wipe out wheels & container with `make _clean`
+ * Wipe out wheels & .venv, with a fresh `poetry install` using `make reset`
+ * `cd` into a shared library and make some changes; notice they're available immediately in the service when you `poetry run ...`
+ * `make clean && make` to rebuild the container with updated shared libs
+
+## Explore & Discuss
+Checkout the other helpers, like `tools/cloudbuild.yaml`, `tools/poetry.dockerfile` and the `Makefiles`.  Criticism, discussion, issues and PRs are welcome.
+
+Join the first discussion about the use of [shared libraries in microservices](https://github.com/dermidgen/python-monorepo/discussions/2) and share your war stories of doing it wrong - or right - or whatever.
